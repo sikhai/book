@@ -3,7 +3,13 @@ const router = express.Router()
 
 
 router.get('/', (req, res) => {
-    res.render('index')
+    let books
+    try {
+        books = Book.find().sort({ createAt: 'desc' }).limit(10).exec()
+    } catch {
+        books = []
+    }
+    res.render('index', { books: books })
 })
 
 module.exports = router
